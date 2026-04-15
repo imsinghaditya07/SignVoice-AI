@@ -32,7 +32,30 @@ To launch the entire platform on your local machine, use the automated command s
 
 ---
 
-**ABSTRACT:** 
+## 🌐 Deployment Guide
+
+This project is optimized for a dual-cloud deployment (Frontend on Vercel, Backend on Render/Heroku).
+
+### 1. Deploy Frontend (Vercel)
+- Create a new project on [Vercel](https://vercel.com).
+- Link your GitHub repository.
+- **Root Directory:** Select the `Frontend` folder.
+- Deploy!
+
+### 2. Deploy Backend (Render / Heroku)
+- Create a new Web Service on [Render](https://render.com).
+- Select the `Backend` folder.
+- **Runtime:** Python.
+- **Start Command:** `gunicorn api:app` (Port 5002).
+- **Note:** Ensure you have enough RAM (512MB+) to load the TensorFlow models.
+
+### 3. Link them together
+- Once your Backend is live, copy its URL (e.g., `https://signvoice-api.onrender.com`).
+- Open `Frontend/script.js`.
+- Update `const API_BASE_URL` with your new Backend URL.
+- Push the change to GitHub, and Vercel will auto-update!
+
+---
 
  Sign language is one of the oldest and most natural form of language for communication, hence we have come up with a real time method using neural networks for finger spelling based American sign language. Automatic human gesture recognition from camera images is an interesting topic for developing vision. We propose a convolution neural network (CNN) method to recognize hand gestures of human actions from an image captured by camera. The purpose is to recognize hand gestures of human task activities from a camera image. The position of hand and orientation are applied to obtain the training and testing data for the CNN. The hand is first passed through a filter and after the filter is applied where the hand is passed through a classifier which predicts the class of the hand gestures. Then the calibrated images are used to train CNN. 
  
