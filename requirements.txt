@@ -1,8 +1,10 @@
-numpy
-opencv-python
-pyttsx3
-tensorflow
+Flask
+Flask-Cors
+opencv-python-headless
+numpy<2.0.0
+tensorflow-cpu
 cvzone
 mediapipe
+gunicorn
 pyenchant
 pillow
