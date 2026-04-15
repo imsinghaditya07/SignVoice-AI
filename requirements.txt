@@ -4,7 +4,8 @@ opencv-python-headless
 numpy<2.0.0
 tensorflow-cpu
 cvzone
-mediapipe
+mediapipe==0.10.9
+protobuf==3.20.3
 gunicorn
 pyenchant
 pillow
