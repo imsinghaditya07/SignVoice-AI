@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Recognition - Live Stream</title>
+    <style>
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            grid-column: span 2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .video-container {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            display: block;
+        }
+
+        .stats-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-title {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .prediction-value {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-align: center;
+            margin: 0;
+        }
+
+        .sentence-box {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            min-height: 100px;
+            color: #cbd5e1;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 2rem;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .badge {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            header {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SignVoice AI <span style="font-weight: 200; font-size: 0.8em;">Connect</span></h1>
+        <p style="color: #94a3b8;">Real-time ASL to Text and Speech Conversion</p>
+    </header>
+
+    <div class="container">
+        <div class="video-container">
+            <div class="badge">LIVE FEED</div>
+            <img src="{{ url_for('video_feed') }}" alt="Camera Stream">
+        </div>
+
+        <div class="stats-panel">
+            <div class="card">
+                <div class="card-title">Live Prediction</div>
+                <p class="prediction-value" id="prediction-text">...</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Transcription</div>
+                <div class="sentence-box" id="sentence-text">
+                    Waiting for input...
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Controls</div>
+                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                    <button style="flex: 1; padding: 0.75rem; border-radius: 0.5rem; border: none; background: #334155; color: white; cursor: pointer;" onclick="clearSentence()">Clear</button>
+                    <button style="flex: 1; padding: 0.75rem; border-radius: 0.5rem; border: none; background: var(--secondary); color: white; cursor: pointer;" onclick="speakSentence()">Speak</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Powered by CNN & MediaPipe &bull; SignVoice AI 2026
+    </div>
+
+    <script>
+        function updateStatus() {
+            fetch('/status')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('prediction-text').innerText = data.prediction || '...';
+                    if (data.sentence && data.sentence.trim() !== '') {
+                        document.getElementById('sentence-text').innerText = data.sentence;
+                    }
+                })
+                .catch(err => console.error('Error fetching status:', err));
+        }
+
+        function clearSentence() {
+            fetch('/clear', {method: 'POST'})
+                .then(() => document.getElementById('sentence-text').innerText = 'Waiting for input...');
+        }
+
+        function speakSentence() {
+            fetch('/speak', {method: 'POST'});
+        }
+
+        setInterval(updateStatus, 300);
+    </script>
+</body>
+</html>
