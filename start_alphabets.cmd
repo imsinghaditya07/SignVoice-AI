@@ -1,5 +1,5 @@
 REM LINT:IGNORE E018
 @echo off
 echo Starting Sign Language Prediction in ALPHABET Mode...
-python Backend\final_pred.py
+python backend\final_pred.py
  c         

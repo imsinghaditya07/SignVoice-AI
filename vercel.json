@@ -3,14 +3,14 @@
   "name": "signvoice-ai",
   "builds": [
     {
-      "src": "Frontend/**",
+      "src": "frontend/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/Frontend/$1"
+      "dest": "/frontend/$1"
     }
   ]
 }
