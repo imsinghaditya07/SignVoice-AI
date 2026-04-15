@@ -15,7 +15,7 @@
 // CONFIGURATION (CHANGE THIS WHEN DEPLOYING)
 // ==========================================
 // If deploying the frontend to Vercel, change this to your deployed Python Backend URL (e.g., your Render API Link)
-const API_BASE_URL = 'http://localhost:5002';
+const API_BASE_URL = 'https://signvoice-ai-1-7.onrender.com';
 
 // ==========================================
 // Slide Navigation Logic
