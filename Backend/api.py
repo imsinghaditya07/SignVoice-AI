@@ -26,7 +26,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Global model and detector initialization
-MODEL_PATH = '../cnn8grps_rad1_model.h5'
+MODEL_PATH = './cnn8grps_rad1_model.h5'
 model = load_model(MODEL_PATH)
 hd1 = HandDetector(maxHands=1, detectionCon=0.4)
 hd2 = HandDetector(maxHands=1, detectionCon=0.4)
@@ -302,7 +302,7 @@ def get_sign(letter):
     if letter == ' ' or not letter.isalpha():
         return jsonify({'status': 'space'})
         
-    folder = os.path.join('../AtoZ_3.1', letter)
+    folder = os.path.join('./AtoZ_3.1', letter)
     for ext in ['*.jpg', '*.jpeg', '*.png', '*.bmp']:
         files = glob.glob(os.path.join(folder, ext))
         if files:

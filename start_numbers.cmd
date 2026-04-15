@@ -1,3 +1,3 @@
 @echo off
 echo Starting Sign Language Prediction in NUMBERS Mode...
-python final_pred.py numbers
+python Backend\final_pred.py numbers
