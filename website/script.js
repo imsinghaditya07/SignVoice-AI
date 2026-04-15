@@ -1,3 +1,16 @@
+/**
+ * SignVoice AI - Frontend Application Core
+ * ---------------------------------------
+ * Handles real-time camera processing, UI state management,
+ * and high-performance communication with the AI inference backend.
+ * 
+ * Includes:
+ * - Dynamic Slide Navigation
+ * - Real-time Webcam to Base64 Pipeline
+ * - Mediapipe Skeleton Overlay Rendering
+ * - Text-to-Sign Animation Sequencer
+ */
+
 // ==========================================
 // CONFIGURATION (CHANGE THIS WHEN DEPLOYING)
 // ==========================================

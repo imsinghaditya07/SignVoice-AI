@@ -1,3 +1,13 @@
+"""
+SignVoice AI - Real-time Inference Engine
+----------------------------------------
+This module handles real-time hand landmark processing, neural network classification (CNN),
+and visual asset serving for the SignVoice AI web platform.
+
+Author: Antigravity AI
+Updated: 2026-04-15
+"""
+
 import os
 import cv2
 import numpy as np
@@ -10,10 +20,12 @@ import math
 import logging
 import glob
 
+# Standard professional logging configuration
 logging.getLogger('werkzeug').setLevel(logging.ERROR)
 app = Flask(__name__)
 CORS(app)
 
+# Global model and detector initialization
 MODEL_PATH = '../cnn8grps_rad1_model.h5'
 model = load_model(MODEL_PATH)
 hd1 = HandDetector(maxHands=1, detectionCon=0.4)
@@ -21,9 +33,15 @@ hd2 = HandDetector(maxHands=1, detectionCon=0.4)
 OFFSET = 29
 
 def distance(x, y):
+    """Computes Euclidean distance between two 2D points."""
     return math.sqrt(((x[0] - y[0]) ** 2) + ((x[1] - y[1]) ** 2))
 
 def subgroup_classify(ch1, ch2, pts):
+    """
+    Refines the first-level CNN classification using detailed MediaPipe landmark heuristics.
+    This solves ambiguity between similar signs (e.g., A/E/M/N/S/T) by checking
+    finger relative positions and distances.
+    """
     l=[[5,2],[5,3],[3,5],[3,6],[3,0],[3,2],[6,4],[6,1],[6,2],[6,6],[6,7],[6,0],[6,5],[4,1],[1,0],[1,1],[6,3],[1,6],[5,6],[5,1],[4,5],[1,4],[1,5],[2,0],[2,6],[4,6],[1,0],[5,7],[1,6],[6,1],[7,6],[2,5],[7,1],[5,4],[7,0],[7,5],[7,2]]
     pl = [ch1, ch2]
     if pl in l:

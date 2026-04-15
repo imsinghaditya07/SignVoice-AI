@@ -1,4 +1,36 @@
-**Sign-Language-To-Text-and-Speech-Conversion**
+# 🤟 SignVoice AI - Bridging Voices Beyond Silences
+
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
+[![Python](https://img.shields.io/badge/API-Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![TensorFlow](https://img.shields.io/badge/AI-TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://tensorflow.org)
+[![Mediapipe](https://img.shields.io/badge/Skeleton-Mediapipe-012022?style=for-the-badge&logo=google&logoColor=white)](https://mediapipe.dev)
+
+SignVoice AI is an advanced, mission-driven platform designed to break down communication barriers. By leveraging state-of-the-art Convolutional Neural Networks (CNN) and MediaPipe Landmark Detection, this project provides a seamless bridge between American Sign Language (ASL) and written/spoken language.
+
+---
+
+## 🚀 Newly Added: Modern Web Experience
+We have recently evolved from a desktop-only application to a full-featured **Glassmorphic Web Experience**.
+
+### Key Web Features:
+- **Real-time Sign-to-Text:** Optimized inference through a Flask-based AI engine.
+- **Dynamic Text-to-Sign:** High-speed sign language animation sequencer.
+- **Premium UI/UX:** Responsive design with Figma-inspired aesthetics and Dark/Light mode support.
+- **Low Latency Pipeline:** Recursive asynchronous inference loops for smooth 30FPS tracking in-browser.
+
+---
+
+---
+
+## 🛠️ Getting Started (Local Development)
+
+To launch the entire platform on your local machine, use the automated command scripts provided:
+
+1. **Launch the Web App:** Run `start_website.cmd` (Launches both the Flask API and the live local server).
+2. **Launch Alphabet Prediction:** Run `start_alphabets.cmd` (For local terminal inference).
+3. **Launch Number Prediction:** Run `start_numbers.cmd`.
+
+---
 
 **ABSTRACT:** 
 
