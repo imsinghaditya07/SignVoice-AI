@@ -338,7 +338,31 @@ body::before {
     }
 }
 
-/* DASHBOARD MODE Styles */;
+/* OVERRIDE FOR DASHBOARD PANELS */
+.dashboard-panel.active-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+}
+
+@media (max-width: 1000px) {
+    .dashboard-panel.active-panel {
+        flex-direction: column !important;
+        align-items: center;
+        gap: 20px;
+    }
+    .video-section, .output-section, .input-section, .avatar-section {
+        width: 100% !important;
+        max-width: 500px;
+        flex: none !important;
+    }
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 12px;
     font-size: 1rem;
     cursor: pointer;
     display: flex;
