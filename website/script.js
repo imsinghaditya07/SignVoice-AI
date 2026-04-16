@@ -1,7 +1,7 @@
 // Configuration: Replace the Render URL once you deploy your backend!
 let API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
     ? 'http://localhost:5002' 
-    : 'https://signvoice-ai2-1.onrender.com';
+    : 'https://signvoice-ai.onrender.com';
 
 // CLEAN URL: Remove trailing slash if present to avoid double-slashes in fetch
 if (API_URL.endsWith('/')) {
