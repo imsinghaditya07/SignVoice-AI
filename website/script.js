@@ -1,7 +1,7 @@
 // Configuration: Replace the Render URL once you deploy your backend!
 const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
     ? 'http://localhost:5002' 
-    : 'https://signvoice-api.onrender.com';
+    : 'https://signvoice-ai2-1.onrender.com';
 
 // Slide Navigation Logic
 function navigate(slideId) {
