@@ -136,12 +136,12 @@ async function enableCamera() {
                     }
                 } catch (apiError) {
                     console.error("API Error (Sign to Text):", apiError);
-                    outputBox.innerHTML = `<span style="color:red">Syncing with backend... (Check console)</span>`;
+                    outputBox.innerHTML = `<span style="font-size:0.9rem; color:red">Connection failed. Check if backend is awake at: <br>${API_URL}</span>`;
                 }
             }
             
-            // Wait 100ms for cloud stability
-            setTimeout(captureLoop, 100);
+            // Wait 500ms for cloud stability (prevent flooding slow connections)
+            setTimeout(captureLoop, 500);
         }
         
         // Fire it up!
@@ -199,7 +199,7 @@ async function playTextToSign() {
             }
         } catch (e) {
             console.error("API Error (Text to Sign):", e);
-            statusMsg.innerHTML = `<span style="color:red">Failed to reach backend server.</span>`;
+            statusMsg.innerHTML = `<span style="color:red">Error: ${e.message}</span>`;
         }
 
         // Wait 1000ms between letters to simulate the "Speed scale" setting

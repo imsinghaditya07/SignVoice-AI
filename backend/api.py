@@ -104,8 +104,13 @@ def get_refinement(ch1, pts):
         
     return ch1 # Fallback to original prediction
 
+@app.before_request
+def log_request_info():
+    print(f"DEBUG: Request to {request.path}")
+
 @app.route('/predict', methods=['POST'])
 def predict():
+    print(f"DEBUG: Processing /predict request")
     try:
         with lock:
             if model is None: return jsonify({'prediction': 'No Model'})
