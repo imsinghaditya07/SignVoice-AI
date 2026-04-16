@@ -7,8 +7,11 @@
 ## 👥 Team BYTE BREAKER
 
 *Anand Kumar Jha (Team Leader | (Backend Developer) 
+
 *Aditya Singh (AI & System Architect | UI/UX Designer)
+
 *Debashrita Mandal  (Integration & Deployment)
+
 *Aaryan Lal Das (ML Model Train | Data & Training)
 ---
 ## 📌 Overview
