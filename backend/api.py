@@ -15,7 +15,8 @@ from cvzone.HandTrackingModule import HandDetector
 logging.getLogger('werkzeug').setLevel(logging.ERROR)
 
 app = Flask(__name__)
-CORS(app)
+# Allow local dev and your specific render frontend
+CORS(app, resources={r"/*": {"origins": ["http://localhost:8000", "http://127.0.0.1:8000", "https://signvoice-frontend.onrender.com", "*"]}})
 
 # Resilient paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
