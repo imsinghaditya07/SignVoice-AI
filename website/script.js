@@ -1,10 +1,35 @@
 // Configuration: Replace the Render URL once you deploy your backend!
-const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+let API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
     ? 'http://localhost:5002' 
     : 'https://signvoice-ai2-1.onrender.com';
 
-// Slide Navigation Logic
-function navigate(slideId) {
+// CLEAN URL: Remove trailing slash if present to avoid double-slashes in fetch
+if (API_URL.endsWith('/')) {
+    API_URL = API_URL.slice(0, -1);
+}
+
+console.log("Current API Backend:", API_URL);
+
+// Check Backend Health on load
+async function checkApiHealth() {
+    const dot = document.getElementById('api-status-dot');
+    const text = document.getElementById('api-status-text');
+    try {
+        const resp = await fetch(`${API_URL}/`);
+        if (resp.ok) {
+            dot.style.background = '#22c55e'; // Green
+            text.innerText = 'Online';
+            console.log("Backend connection successful.");
+        } else {
+            throw new Error();
+        }
+    } catch (e) {
+        dot.style.background = '#ef4444'; // Red
+        text.innerText = 'Offline (Check your Render Backend)';
+        console.error("Backend connection failed. Ensure your Render Web Service is 'Live'.");
+    }
+}
+window.addEventListener('load', checkApiHealth);
     // Prevent default anchor behavior
     if (window.event) window.event.preventDefault();
 
@@ -104,7 +129,7 @@ async function enableCamera() {
             if (!isRunning) return;
             
             if (videoElement.readyState === videoElement.HAVE_ENOUGH_DATA) {
-                // Calculate cropping
+                // Calculate cropping for a 1:1 aspect ratio to avoid squashing the hand
                 const videoWidth = videoElement.videoWidth;
                 const videoHeight = videoElement.videoHeight;
                 const size = Math.min(videoWidth, videoHeight);
@@ -114,7 +139,7 @@ async function enableCamera() {
                 // Draw centered crop onto 400x400 canvas
                 ctx.drawImage(videoElement, sx, sy, size, size, 0, 0, canvas.width, canvas.height);
                 
-                const base64Image = canvas.toDataURL('image/jpeg', 0.6);
+                const base64Image = canvas.toDataURL('image/jpeg', 0.6); // slight compression
 
                 try {
                     const response = await fetch(`${API_URL}/predict`, {
@@ -135,12 +160,12 @@ async function enableCamera() {
                         skeletonFeed.style.display = 'inline-block';
                     }
                 } catch (apiError) {
-                    console.error("API Error:", apiError);
-                    outputBox.innerHTML = `<span style="color:red">Backend syncing... (Check console)</span>`;
+                    console.error("API Error (Sign to Text):", apiError);
+                    outputBox.innerHTML = `<span style="color:red">Syncing with backend... (Check console)</span>`;
                 }
             }
             
-            // 100ms is the balanced delay for cloud usage
+            // Wait 100ms for cloud stability
             setTimeout(captureLoop, 100);
         }
         
@@ -199,7 +224,7 @@ async function playTextToSign() {
             }
         } catch (e) {
             console.error("API Error (Text to Sign):", e);
-            statusMsg.innerHTML = `<span style="color:red">Error: ${e.message}</span>`;
+            statusMsg.innerHTML = `<span style="color:red">Failed to reach backend server.</span>`;
         }
 
         // Wait 1000ms between letters to simulate the "Speed scale" setting

@@ -84,9 +84,13 @@
 
         <!-- === DASHBOARD PAGE SLiDE === -->
         <section id="dashboard" class="slide">
-            <div class="dashboard-header">
-                <h2>Translation Dashboard</h2>
-                <p>Select your mode below to begin real-time translation.</p>
+            <div class="dashboard-header" style="text-align: center; margin-bottom: 30px;">
+                <h2 class="section-title">Translation Dashboard</h2>
+                <p class="section-subtitle">Select your mode below to begin real-time translation.</p>
+                <div id="api-status-wrapper" style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                    <span id="api-status-dot" style="display: inline-block; width: 10px; height: 10px; background: #64748b; border-radius: 50%; margin-right: 5px;"></span>
+                    API Status: <span id="api-status-text">Checking...</span>
+                </div>
             </div>
             
             <div class="mode-selector">

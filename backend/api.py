@@ -14,18 +14,9 @@ from cvzone.HandTrackingModule import HandDetector
 # Set logging to error only
 logging.getLogger('werkzeug').setLevel(logging.ERROR)
 
-import gc
-
 app = Flask(__name__)
-# Global Security Settings
-CORS(app, origins="*")
-
-@app.after_request
-def add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
-    response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,OPTIONS'
-    return response
+# Allow local dev and your specific render frontend
+CORS(app, resources={r"/*": {"origins": ["http://localhost:8000", "http://127.0.0.1:8000", "https://signvoice-frontend.onrender.com", "*"]}})
 
 # Resilient paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -33,33 +24,32 @@ MODEL_26_PATH = os.path.join(BASE_DIR, 'landmark_cnn_model.h5')
 MODEL_8_PATH = os.path.join(BASE_DIR, 'cnn8grps_rad1_model.h5')
 LABELS_PATH = os.path.join(BASE_DIR, 'labels.pickle')
 
-# Global Initialization (Prevents memory leaks/hangs)
+# Loading State
 model = None
-detector = None
 labels = None
 is_26_class = False
-lock = threading.Lock()
 
-def init_ai():
-    global model, detector, labels, is_26_class
+def load_best_model():
+    global model, labels, is_26_class
     try:
         if os.path.exists(MODEL_26_PATH) and os.path.exists(LABELS_PATH):
             model = load_model(MODEL_26_PATH)
             with open(LABELS_PATH, 'rb') as f:
                 labels = pickle.load(f)
-            detector = HandDetector(staticMode=False, maxHands=1, detectionCon=0.4, modelComplexity=1)
             is_26_class = True
-            print("AI SUCCESS: 26-Class Model Ready")
+            print("Loaded PRO 26-Class Model.")
         elif os.path.exists(MODEL_8_PATH):
             model = load_model(MODEL_8_PATH)
-            detector = HandDetector(staticMode=False, maxHands=1, detectionCon=0.4)
             is_26_class = False
-            print("📦 AI FALLBACK: 8-Group Model Ready")
+            print("Loaded Legacy 8-Group Model.")
     except Exception as e:
-        print(f"❌ AI ERROR: Initialization failed: {e}")
+        print(f"Model Load Error: {e}")
 
-# Run once on load
-init_ai()
+load_best_model()
+
+# Hand detector
+hd_full = HandDetector(staticMode=False, maxHands=1, detectionCon=0.3, modelComplexity=1)
+lock = threading.Lock()
 
 def distance(x, y):
     return math.sqrt(((x[0] - y[0]) ** 2) + ((x[1] - y[1]) ** 2))
@@ -124,7 +114,7 @@ def predict():
             img = cv2.imdecode(np.frombuffer(img_data, np.uint8), cv2.IMREAD_COLOR)
             
             img = cv2.flip(img, 1)
-            hands, _ = detector.findHands(img, draw=False, flipType=True)
+            hands, _ = hd_full.findHands(img, draw=False, flipType=True)
             
             if not hands: return jsonify({'prediction': '...', 'status': 'No Hand'})
             
