@@ -160,6 +160,23 @@ def predict():
     except Exception as e:
         return jsonify({'error': str(e), 'prediction': '...'})
 
+@app.route('/get_sign/<char>')
+def get_sign(char):
+    char = char.lower()
+    # 1. Try static_signs (Render-friendly)
+    img_path = os.path.join(BASE_DIR, 'static_signs', f'{char}.jpg')
+    
+    # 2. Fallback to local full dataset
+    if not os.path.exists(img_path):
+        img_path = os.path.join(BASE_DIR, 'AtoZ_3.1', char.upper(), f'{char.upper()}.jpg')
+
+    if os.path.exists(img_path):
+        with open(img_path, "rb") as f:
+            b64_img = base64.b64encode(f.read()).decode('utf-8')
+        return jsonify({'status': 'success', 'image': b64_img})
+    
+    return jsonify({'status': 'error', 'message': 'Sign not found'}), 404
+
 @app.route('/')
 def home():
     return jsonify({
