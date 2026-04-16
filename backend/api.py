@@ -16,8 +16,8 @@ logging.getLogger('werkzeug').setLevel(logging.ERROR)
 
 import gc
 
-# Global CORS
-CORS(app)
+# Global CORS (Explicit Asterisk)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.after_request
 def add_cors_headers(response):
