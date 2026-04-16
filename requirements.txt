@@ -1,8 +1,9 @@
-numpy
-opencv-python
-pyttsx3
-tensorflow
-cvzone
-mediapipe
-pyenchant
+flask==3.0.0
+flask-cors==4.0.0
+opencv-python-headless
+numpy==1.26.4
+tensorflow-cpu==2.15.0
+cvzone==1.6.1
+mediapipe==0.10.11
+gunicorn==21.2.0
 pillow
