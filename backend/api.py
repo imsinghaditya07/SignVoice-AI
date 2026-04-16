@@ -16,9 +16,15 @@ logging.getLogger('werkzeug').setLevel(logging.ERROR)
 
 import gc
 
-app = Flask(__name__)
-# Global CORS to ensure zero blocking
-CORS(app, resources={r"/*": {"origins": "*"}})
+# Global CORS
+CORS(app)
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,OPTIONS'
+    return response
 
 # Resilient paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
