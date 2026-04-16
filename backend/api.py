@@ -17,9 +17,8 @@ logging.getLogger('werkzeug').setLevel(logging.ERROR)
 import gc
 
 app = Flask(__name__)
-
-# Global CORS (Explicit Asterisk)
-CORS(app, resources={r"/*": {"origins": "*"}})
+# Global Security Settings
+CORS(app, origins="*")
 
 @app.after_request
 def add_cors_headers(response):
@@ -50,7 +49,7 @@ def init_ai():
                 labels = pickle.load(f)
             detector = HandDetector(staticMode=False, maxHands=1, detectionCon=0.4, modelComplexity=1)
             is_26_class = True
-            print("🚀 AI SUCCESS: 26-Class Model Ready")
+            print("AI SUCCESS: 26-Class Model Ready")
         elif os.path.exists(MODEL_8_PATH):
             model = load_model(MODEL_8_PATH)
             detector = HandDetector(staticMode=False, maxHands=1, detectionCon=0.4)
@@ -115,13 +114,8 @@ def get_refinement(ch1, pts):
         
     return ch1 # Fallback to original prediction
 
-@app.before_request
-def log_request_info():
-    print(f"DEBUG: Request to {request.path}")
-
 @app.route('/predict', methods=['POST'])
 def predict():
-    print(f"DEBUG: Processing /predict request")
     try:
         with lock:
             if model is None: return jsonify({'prediction': 'No Model'})

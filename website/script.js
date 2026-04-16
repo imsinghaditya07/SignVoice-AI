@@ -91,10 +91,10 @@ async function enableCamera() {
         outputBox.innerHTML = "Camera active. Syncing with AI model... Please make a sign.";
         outputBox.classList.remove('placeholder-text');
 
-        // Create an invisible canvas to extract frames (Optimized for Cloud RAM)
+        // Create an invisible canvas to extract frames
         const canvas = document.createElement('canvas');
-        canvas.width = 224;
-        canvas.height = 224;
+        canvas.width = 400;
+        canvas.height = 400;
         const ctx = canvas.getContext('2d');
 
         // Start recursive synchronous inference loop (Replaces broken setInterval)
@@ -111,10 +111,10 @@ async function enableCamera() {
                 const sx = (videoWidth - size) / 2;
                 const sy = (videoHeight - size) / 2;
 
-                // Draw centered crop onto 224x224 canvas
+                // Draw centered crop onto 400x400 canvas
                 ctx.drawImage(videoElement, sx, sy, size, size, 0, 0, canvas.width, canvas.height);
                 
-                const base64Image = canvas.toDataURL('image/jpeg', 0.4); // 40% quality to save bandwidth/RAM
+                const base64Image = canvas.toDataURL('image/jpeg', 0.6);
 
                 try {
                     const response = await fetch(`${API_URL}/predict`, {
@@ -135,13 +135,13 @@ async function enableCamera() {
                         skeletonFeed.style.display = 'inline-block';
                     }
                 } catch (apiError) {
-                    console.error("API Error (Sign to Text):", apiError);
-                    outputBox.innerHTML = `<span style="font-size:0.9rem; color:red">Connection failed. Check if backend is awake at: <br>${API_URL}</span>`;
+                    console.error("API Error:", apiError);
+                    outputBox.innerHTML = `<span style="color:red">Backend syncing... (Check console)</span>`;
                 }
             }
             
-            // Wait 500ms for cloud stability (prevent flooding slow connections)
-            setTimeout(captureLoop, 500);
+            // 100ms is the balanced delay for cloud usage
+            setTimeout(captureLoop, 100);
         }
         
         // Fire it up!
