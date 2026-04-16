@@ -10,9 +10,11 @@
 * Aditya Singh
 * Debashrita Mandal
 * Aaryan Lal Das
-
+Anand Kumar Jha (Team Leader | (Backend Developer) 
+Aditya Singh (AI & System Architect | UI/UX Designer)
+Debashrita Mandal  (Integration & Deployment)
+Aaryan Lal Das (ML Model Train | Data & Training)
 ---
-
 ## 📌 Overview
 
 **SignVoice AI** is a real-time, AI-powered **bi-directional communication system** designed to bridge the gap between deaf/mute individuals and people who rely on spoken language.
