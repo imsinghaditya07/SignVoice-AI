@@ -16,6 +16,8 @@ logging.getLogger('werkzeug').setLevel(logging.ERROR)
 
 import gc
 
+app = Flask(__name__)
+
 # Global CORS (Explicit Asterisk)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
