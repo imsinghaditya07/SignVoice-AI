@@ -1,4 +1,8 @@
 __pycache__/
-.vscode/
 *.pyc
+.vscode/
+Backend/AtoZ_3.1/
+AtoZ_3.1/
+*.tmp
 .DS_Store
+model_training_logs/

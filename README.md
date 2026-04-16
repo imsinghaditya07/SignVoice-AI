@@ -1,61 +1,6 @@
-# 🤟 SignVoice AI - Bridging Voices Beyond Silences
+**Sign-Language-To-Text-and-Speech-Conversion**
 
-[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
-[![Python](https://img.shields.io/badge/API-Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
-[![TensorFlow](https://img.shields.io/badge/AI-TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://tensorflow.org)
-[![Mediapipe](https://img.shields.io/badge/Skeleton-Mediapipe-012022?style=for-the-badge&logo=google&logoColor=white)](https://mediapipe.dev)
-
-SignVoice AI is an advanced, mission-driven platform designed to break down communication barriers. By leveraging state-of-the-art Convolutional Neural Networks (CNN) and MediaPipe Landmark Detection, this project provides a seamless bridge between American Sign Language (ASL) and written/spoken language.
-
----
-
-## 🚀 Newly Added: Modern Web Experience
-We have recently evolved from a desktop-only application to a full-featured **Glassmorphic Web Experience**.
-
-### Key Web Features:
-- **Real-time Sign-to-Text:** Optimized inference through a Flask-based AI engine.
-- **Dynamic Text-to-Sign:** High-speed sign language animation sequencer.
-- **Premium UI/UX:** Responsive design with Figma-inspired aesthetics and Dark/Light mode support.
-- **Low Latency Pipeline:** Recursive asynchronous inference loops for smooth 30FPS tracking in-browser.
-
----
-
----
-
-## 🛠️ Getting Started (Local Development)
-
-To launch the entire platform on your local machine, use the automated command scripts provided:
-
-1. **Launch the Web App:** Run `start_website.cmd` (Launches both the Flask API and the live local server).
-2. **Launch Alphabet Prediction:** Run `start_alphabets.cmd` (For local terminal inference).
-3. **Launch Number Prediction:** Run `start_numbers.cmd`.
-
----
-
-## 🌐 Deployment Guide
-
-This project is optimized for a dual-cloud deployment (Frontend on Vercel, Backend on Render/Heroku).
-
-### 1. Deploy Frontend (Vercel)
-- Create a new project on [Vercel](https://vercel.com).
-- Link your GitHub repository.
-- **Root Directory:** Select the `Frontend` folder.
-- Deploy!
-
-### 2. Deploy Backend (Render / Heroku)
-- Create a new Web Service on [Render](https://render.com).
-- Select the `Backend` folder.
-- **Runtime:** Python.
-- **Start Command:** `gunicorn api:app` (Port 5002).
-- **Note:** Ensure you have enough RAM (512MB+) to load the TensorFlow models.
-
-### 3. Link them together
-- Once your Backend is live, copy its URL (e.g., `https://signvoice-api.onrender.com`).
-- Open `Frontend/script.js`.
-- Update `const API_BASE_URL` with your new Backend URL.
-- Push the change to GitHub, and Vercel will auto-update!
-
----
+**ABSTRACT:** 
 
  Sign language is one of the oldest and most natural form of language for communication, hence we have come up with a real time method using neural networks for finger spelling based American sign language. Automatic human gesture recognition from camera images is an interesting topic for developing vision. We propose a convolution neural network (CNN) method to recognize hand gestures of human actions from an image captured by camera. The purpose is to recognize hand gestures of human task activities from a camera image. The position of hand and orientation are applied to obtain the training and testing data for the CNN. The hand is first passed through a filter and after the filter is applied where the hand is passed through a classifier which predicts the class of the hand gestures. Then the calibrated images are used to train CNN. 
  

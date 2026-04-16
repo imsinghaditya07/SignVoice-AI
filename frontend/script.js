@@ -1,23 +1,3 @@
-/**
- * SignVoice AI - Frontend Application Core
- * ---------------------------------------
- * Handles real-time camera processing, UI state management,
- * and high-performance communication with the AI inference backend.
- * 
- * Includes:
- * - Dynamic Slide Navigation
- * - Real-time Webcam to Base64 Pipeline
- * - Mediapipe Skeleton Overlay Rendering
- * - Text-to-Sign Animation Sequencer
- */
-
-// ==========================================
-// CONFIGURATION (CHANGE THIS WHEN DEPLOYING)
-// ==========================================
-// If deploying the frontend to Vercel, change this to your deployed Python Backend URL (e.g., your Render API Link)
-const API_BASE_URL = 'https://signvoice-ai-1-7.onrender.com';
-
-// ==========================================
 // Slide Navigation Logic
 function navigate(slideId) {
     // Prevent default anchor behavior
@@ -106,13 +86,13 @@ async function enableCamera() {
         outputBox.innerHTML = "Camera active. Syncing with AI model... Please make a sign.";
         outputBox.classList.remove('placeholder-text');
 
-        // Create an invisible canvas to extract frames
+        // Create an invisible canvas to extract frames at 400x400 for better recognition
         const canvas = document.createElement('canvas');
         canvas.width = 400;
         canvas.height = 400;
         const ctx = canvas.getContext('2d');
 
-        // Start recursive synchronous inference loop (Replaces broken setInterval)
+        // Start recursive synchronous inference loop
         let isRunning = true;
         
         async function captureLoop() {
@@ -120,10 +100,10 @@ async function enableCamera() {
             
             if (videoElement.readyState === videoElement.HAVE_ENOUGH_DATA) {
                 ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-                const base64Image = canvas.toDataURL('image/jpeg', 0.6); // slight compression
+                const base64Image = canvas.toDataURL('image/jpeg', 0.6); // Balanced quality for recognition
 
                 try {
-                    const response = await fetch(`${API_BASE_URL}/predict`, {
+                    const response = await fetch('http://localhost:5002/predict', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ image: base64Image })
@@ -141,12 +121,12 @@ async function enableCamera() {
                         skeletonFeed.style.display = 'inline-block';
                     }
                 } catch (apiError) {
-                    console.warn("Backend syncing...");
+                    console.error("API Error:", apiError);
                 }
             }
             
-            // Wait 300ms BEFORE requesting the next frame so we NEVER queue overload the server!
-            setTimeout(captureLoop, 300);
+            // Wait 100ms - Balanced for 10 FPS without lag
+            setTimeout(captureLoop, 100);
         }
         
         // Fire it up!
@@ -190,7 +170,7 @@ async function playTextToSign() {
         statusMsg.innerHTML = `Loading <strong>${char.toUpperCase()}</strong>...`;
 
         try {
-            const resp = await fetch(`${API_BASE_URL}/get_sign/${char}`);
+            const resp = await fetch(`http://localhost:5002/get_sign/${char}`);
             const data = await resp.json();
 
             if (data.status === 'success') {

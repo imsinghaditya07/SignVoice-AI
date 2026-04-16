@@ -1,11 +1,9 @@
-Flask
-Flask-Cors
+flask==3.0.0
+flask-cors==4.0.0
 opencv-python-headless
-numpy<2.0.0
+numpy==1.26.4
 tensorflow-cpu
-cvzone
-mediapipe==0.10.9
-protobuf==3.20.3
-gunicorn
-pyenchant
+cvzone==1.6.1
+mediapipe==0.10.11
+gunicorn==21.2.0
 pillow
