@@ -91,10 +91,10 @@ async function enableCamera() {
         outputBox.innerHTML = "Camera active. Syncing with AI model... Please make a sign.";
         outputBox.classList.remove('placeholder-text');
 
-        // Create an invisible canvas to extract frames
+        // Create an invisible canvas to extract frames (Optimized for Cloud RAM)
         const canvas = document.createElement('canvas');
-        canvas.width = 400;
-        canvas.height = 400;
+        canvas.width = 224;
+        canvas.height = 224;
         const ctx = canvas.getContext('2d');
 
         // Start recursive synchronous inference loop (Replaces broken setInterval)
@@ -104,17 +104,17 @@ async function enableCamera() {
             if (!isRunning) return;
             
             if (videoElement.readyState === videoElement.HAVE_ENOUGH_DATA) {
-                // Calculate cropping for a 1:1 aspect ratio to avoid squashing the hand
+                // Calculate cropping
                 const videoWidth = videoElement.videoWidth;
                 const videoHeight = videoElement.videoHeight;
                 const size = Math.min(videoWidth, videoHeight);
                 const sx = (videoWidth - size) / 2;
                 const sy = (videoHeight - size) / 2;
 
-                // Draw centered crop onto 400x400 canvas
+                // Draw centered crop onto 224x224 canvas
                 ctx.drawImage(videoElement, sx, sy, size, size, 0, 0, canvas.width, canvas.height);
                 
-                const base64Image = canvas.toDataURL('image/jpeg', 0.6); // slight compression
+                const base64Image = canvas.toDataURL('image/jpeg', 0.4); // 40% quality to save bandwidth/RAM
 
                 try {
                     const response = await fetch(`${API_URL}/predict`, {
