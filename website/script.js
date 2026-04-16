@@ -135,12 +135,13 @@ async function enableCamera() {
                         skeletonFeed.style.display = 'inline-block';
                     }
                 } catch (apiError) {
-                    console.warn("Backend syncing...");
+                    console.error("API Error (Sign to Text):", apiError);
+                    outputBox.innerHTML = `<span style="color:red">Syncing with backend... (Check console)</span>`;
                 }
             }
             
-            // Wait 50ms BEFORE requesting the next frame for ultra-smooth real-time tracking
-            setTimeout(captureLoop, 50);
+            // Wait 100ms for cloud stability
+            setTimeout(captureLoop, 100);
         }
         
         // Fire it up!
@@ -197,7 +198,8 @@ async function playTextToSign() {
                 statusMsg.innerHTML = `<span style="color:var(--accent-blue);">No sign found for: <strong>${char.toUpperCase()}</strong></span>`;
             }
         } catch (e) {
-            console.error("Failed to load sign", e);
+            console.error("API Error (Text to Sign):", e);
+            statusMsg.innerHTML = `<span style="color:red">Failed to reach backend server.</span>`;
         }
 
         // Wait 1000ms between letters to simulate the "Speed scale" setting

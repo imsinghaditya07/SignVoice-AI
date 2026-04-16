@@ -322,11 +322,20 @@ body::before {
 }
 
 @media (max-width: 900px) {
-    .hero-section { flex-direction: column; text-align: center; gap: 40px; }
+    .nav-content { padding: 10px 5%; }
+    .hero-section { flex-direction: column; text-align: center; gap: 40px; padding: 60px 5% 40px; }
     .hero-content { text-align: center; }
     .hero-cta-group { justify-content: center; }
     .hiw-grid { grid-template-columns: 1fr; }
-    .hiw-grid::after { display: none; }
+    
+    .dashboard-panel.active-panel {
+        flex-direction: column !important;
+        align-items: center;
+    }
+    .video-section, .output-section, .input-section, .avatar-section {
+        width: 100% !important;
+        flex: none !important;
+    }
 }
 
 /* DASHBOARD MODE Styles */;
