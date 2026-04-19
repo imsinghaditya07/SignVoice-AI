@@ -1,6 +1,8 @@
 #  SignVoice AI
 
+
 ### *Bridging Voices Beyond Silence*
+
 
 ---
 **GitHub Link - https://github.com/imsinghaditya07/SignVoice-AI
@@ -210,13 +212,13 @@ This project is developed for educational and research purposes.
 * MediaPipe
 * OpenCV
 * Scikit-learn
-* WHO (for data references)
+* WHO  for data references
 * Open-source community
 
 ---
 
 ## ⭐ Final Note
 
-**SignVoice AI is not just a project — it is a bridge that connects silence to expression.**
+**SignVoice AI is not just a project — It is a bridge that connects silence to expression.**
 
 If you like this project, give it a ⭐ and support inclusive technology!
